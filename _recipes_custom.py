@@ -45,6 +45,7 @@ recipes: List[Recipe] = [
         src_ext="epub",
         category="News",
         target_ext=["epub"],
+        slug="france24",
         cover_options=CoverOptions(
             text_colour="black",
             background_colour="white",
