@@ -8,7 +8,7 @@ from _recipe_utils import (
     last_n_days_of_month,
     onlyat_hours,
     onlyon_days,
-    onlyon_weekdays,
+    onlyon_weekdays,)
 
 # Define the categories display order, optional
 categories_sort: List[str] = ["News", "Magazines", "Online Magazines", "Arts & Culture"]
