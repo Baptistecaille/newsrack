@@ -8,14 +8,14 @@ github.blog
 """
 import os
 import sys
+from newspaper import Article
 
 # custom include to share code between recipes
 sys.path.append(os.environ["recipes_includes"])
 from recipes_shared import BasicNewsrackRecipe, format_title
-
 from calibre.web.feeds.news import BasicNewsRecipe
 
-_name = "France 24"
+_name = "France24"
 
 
 class GitHubBlog(BasicNewsrackRecipe, BasicNewsRecipe):
@@ -41,6 +41,11 @@ class GitHubBlog(BasicNewsrackRecipe, BasicNewsRecipe):
             self.pub_date = article.utctime
             self.title = format_title(_name, article.utctime)
 
+    def parse_article(self, article, __, _):
+        article = Article(article.url)
+        article.download()
+        article.parse()
+        return article.text
+
     def parse_feeds(self):
         return self.group_feeds_by_date()
-
