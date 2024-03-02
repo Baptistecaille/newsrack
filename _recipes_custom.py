@@ -42,7 +42,6 @@ recipes: List[Recipe] = [
     # Custom recipe example (recipes_custom/example.recipe.py)
     Recipe(
         recipe="france24",
-        slug="example-01",
         src_ext="epub",
         category="News",
         target_ext=["epub"],
