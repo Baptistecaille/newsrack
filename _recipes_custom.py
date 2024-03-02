@@ -1,4 +1,15 @@
-from dataclasses import dataclass
+# Copyright (c) 2022 https://github.com/ping/
+#
+# This software is released under the GNU General Public License v3.0
+# https://opensource.org/licenses/GPL-3.0
+
+# --------------------------------------------------------------------
+# This file defines default recipes distributed with newsrack.
+# To customise your own instance, do not modify this file.
+# Add your recipes to _recipes_custom.py instead and new recipe source
+# files to recipes_custom/.
+# --------------------------------------------------------------------
+
 from typing import List
 
 from _recipe_utils import (
@@ -8,29 +19,25 @@ from _recipe_utils import (
     last_n_days_of_month,
     onlyat_hours,
     onlyon_days,
-    onlyon_weekdays,)
-
-# Define the categories display order, optional
-categories_sort: List[str] = ["News", "Magazines", "Online Magazines", "Arts & Culture"]
-
-# Custom conversion options: if you're not overwriting axll the format options,
-# it's probably better to work off a copy of the default
-custom_conversion_options = default_conv_options.copy()
-custom_conversion_options.update(
-    {"mobi": ["--output-profile=kindle", "--mobi-file-type=both"]}
+    onlyon_weekdays,
 )
 
-# Define your custom recipes list here
-# Example: https://github.com/ping/newsrack-fork-test/blob/custom/_recipes_custom.py
+# Only mobi work as periodicals on the Kindle
+# Notes:
+#   - When epub is converted to mobi periodicals:
+#       - masthead is lost
+#       - mobi retains periodical support but has the non-functional
+#         calibre generated nav, e.g. Next Section, Main, etc
+#       - article summary/description is lost
+#   - When mobi periodical is converted to epub:
+#       - epub loses the calibre generated nav, e.g. Next Section, Main, etc
+#         but full toc is retained
+#   - Recipe can be defined twice with different src_ext, will work except
+#     for potential throttling and time/bandwidth taken
 
+categories_sort: List[str] = ["News", "Magazines", "Online Magazines", "Arts & Culture"]
 
-@dataclass
-class CustomTitleDateFormatRecipe(Recipe):
-    # Use a different title date format from default
-    def __post_init__(self):
-        self.title_date_format = "%Y-%m-%d"
-
-
+# Keep this list in alphabetical order
 recipes: List[Recipe] = [
     # Custom recipe example (recipes_custom/example.recipe.py)
     Recipe(
@@ -45,7 +52,7 @@ recipes: List[Recipe] = [
         ),  # generate black cover with white text
         tags=["custom-recipe"],
     ),
-Recipe(
+    Recipe(
         recipe="economist",
         slug="economist",
         src_ext="mobi",
@@ -274,4 +281,27 @@ Recipe(
             logo_path_or_url="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Wired_logo.svg/1024px-Wired_logo.svg.png"
         ),
     ),
+    # # Blocked HTTP403 with captcha challenge
+    # Recipe(
+    #     recipe="world-today",
+    #     slug="world-today",
+    #     src_ext="mobi",
+    #     target_ext=["epub"],
+    #     category="Magazines",
+    #     enable_on=(first_n_days_of_month(7) or last_n_days_of_month(7))
+    #     and onlyat_hours(list(range(4, 12))),
+    # ),
+    # Recipe(
+    #     recipe="wsj-paper",
+    #     slug="wsj-print",
+    #     src_ext="mobi",
+    #     target_ext=["epub"],
+    #     category="News",
+    #     tags=["business"],
+    #     timeout=300,
+    #     enable_on=onlyat_hours(list(range(0, 8)), -4),
+    #     cover_options=CoverOptions(
+    #         logo_path_or_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/WSJ_Logo.svg/1024px-WSJ_Logo.svg.png"
+    #     ),
+    # ),
 ]
