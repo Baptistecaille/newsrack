@@ -1,4 +1,4 @@
-"""# Copyright (c) 2022 https://github.com/ping/
+# Copyright (c) 2022 https://github.com/ping/
 #
 # This software is released under the GNU General Public License v3.0
 # https://opensource.org/licenses/GPL-3.0
@@ -43,4 +43,4 @@ class GitHubBlog(BasicNewsrackRecipe, BasicNewsRecipe):
 
     def parse_feeds(self):
         return self.group_feeds_by_date()
-"""
+
