@@ -52,7 +52,7 @@ recipes: List[Recipe] = [
         ),  # generate black cover with white text
         tags=["custom-recipe"],
     ),
-    Recipe(
+"""    Recipe(
         recipe="economist",
         slug="economist",
         src_ext="mobi",
@@ -303,5 +303,5 @@ recipes: List[Recipe] = [
     #     cover_options=CoverOptions(
     #         logo_path_or_url="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/WSJ_Logo.svg/1024px-WSJ_Logo.svg.png"
     #     ),
-    # ),
+    # ),"""
 ]
